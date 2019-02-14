@@ -8,15 +8,15 @@ import {vibrate} from './utils'
 
 export default class App extends React.Component {
   state = {
-    isBreak: false,
-    paused: true,
+    onBreak: false,
+    isPaused: true,
     breakTimer: 300,
     workTimer: 1500,
     count: 1500,
   }
   
   dec = () => {
-    if (this.state.count > 0 && !this.state.paused) {
+    if (this.state.count > 0 && !this.state.isPaused) {
       this.setState(prevState => ({
         count: prevState.count - 1,
       }))
@@ -28,27 +28,27 @@ export default class App extends React.Component {
 
   reset = () => {
      this.setState({
-       count: this.state.isBreak ? this.state.breakTimer : this.state.workTimer,
-       paused: true,
+       count: this.state.onBreak ? this.state.breakTimer : this.state.workTimer,
+       isPaused: true,
      })
   }  
 
   pause = () => this.setState(prevState => ({
-    paused: !prevState.paused,
+    isPaused: !prevState.isPaused,
   }))
 
   toggleBreak = () => this.setState(prevState => ({
-    isBreak: !prevState.isBreak,
-    count: !prevState.isBreak ? this.state.breakTimer : this.state.workTimer,
+    onBreak: !prevState.onBreak,
+    count: !prevState.onBreak ? this.state.breakTimer : this.state.workTimer,
   }))
 
   render() {
     return (
       <View style={styles.container}>
-        <Timer dec={this.dec} toggleBreak={this.toggleBreak} paused={this.state.paused} count={this.state.count}/>
-        <PauseButton paused={this.state.paused} pause={this.pause} />
+        <Timer dec={this.dec} toggleBreak={this.toggleBreak} paused={this.state.isPaused} count={this.state.count}/>
+        <PauseButton paused={this.state.isPaused} pause={this.pause} />
         <ResetButton reset={this.reset} />
-        <ToggleBreakButton isBreak={this.state.isBreak} toggleBreak={this.toggleBreak} />
+        <ToggleBreakButton isBreak={this.state.onBreak} toggleBreak={this.toggleBreak} />
       </View>
     );
   }
